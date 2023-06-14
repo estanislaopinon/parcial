@@ -1,59 +1,63 @@
-# Se recuperó la bitácora de la nave del cazarrecompensas Boba Fett, la
+# 3. Se recuperó la bitácora de la nave del cazarrecompensas Boba Fett, la
 # cual se almacenaban en una pila en cada misión de caza que
-# emprendió (con la siguiente información planeta visitado, a quien
-# capturado, costo de la recompensa), resolver las siguientes
+# emprendió(con la siguiente información planeta visitado, a quien
+#           capturado, costo de la recompensa), resolver las siguientes
 # actividades:
 # a. Mostrar los planetas visitados en el orden hizo las misiones.
 # b. Determinar cuántos créditos galácticos recaudo en total.
 # c. Determinar el número de la misión en que capturo a Han Solo
 # y en que planeta fue, suponga que dicha misión está cargada.
-
 from pila import Pila
+pila = Pila()
+pila_aux = Pila()
 
-bitacora = Pila()
-bitacora_aux = Pila()
 
-class Registro():
-    def __init__(self, planeta, capturado, recompensa):
+class Registros():
+    def __init__(self, planeta, captura, costo):
         self.planeta = planeta
-        self.capturado = capturado
-        self.recompensa = recompensa
+        self.captura = captura
+        self.costo = costo
 
     def __str__(self):
-        return f'{self.planeta} - {self.capturado} - {self.recompensa}'
+        return f"{self.planeta} - {self.captura} - {self.costo}"
 
 
-def carga_pila():
-    bitacora.push(Registro('Tatooine', 'Han Solo', '100.000 creditos'))
-    bitacora.push(Registro('Coruscant', 'Greedo', '50.000 creditos'))
-    bitacora.push(Registro('Endor', 'Wicket W.Warrick', '25.000 creditos'))
-    bitacora.push(Registro('Hoth', 'General Veers', '75.000 creditos'))
-    bitacora.push(Registro('Bespin', 'Lando Calrissian', '150.000 creditos'))
+def carga():
+    pila.push(Registros("Tatooine", "Han Solo", 100000))
+    pila.push(Registros("Coruscant", "Greedo", 50000))
+    pila.push(Registros("Endor", "Wicket W. Warrick", 25000))
+    pila.push(Registros("Hoth", "General Veers", 75000))
+    pila.push(Registros("Bespin", "Lando Calrissian", 1500))
+
+# a. Mostrar los planetas visitados en el orden hizo las misiones.
 
 
-carga_pila()
+def misiones(pila):
+    while pila.size() > 0:
+        cosa = pila.pop()
+        pila_aux.push(cosa)
 
-def planetas_visitados(bitacora):
-    bitacora_aux=Pila()
-    planetas_visitados=[]
-    while bitacora.size()>=:
-        mision=bitacora.pop()
-        planetas_visitados.push(mision[0])
-        bitacora_aux.push(mision)
-    while bitacora_aux.size()>0:
-        bitacora.push(bitacora_aux.pop())
-    
-    return planetas_visitados
+    for j in range(pila_aux.size()):
+        print(pila_aux.on_top())
+        pila.push(pila_aux.on_top())
+        pila_aux.pop()
 
-def total_creditos(bitacora):
-    bitacora_aux=Pila()
-    creditos_total=0
-    while bitacora.size()>0:
-        valor= bitacora.pop()
-        creditos_total+= valor[2]
-        bitacora_aux.push(valor)
-    while bitacora_aux.size()>0:
-        bitacora.push(bitacora_aux.pop())
-    
-    return total_creditos
+# b. Determinar cuántos créditos galácticos recaudo en total.
 
+
+def total(pila):
+    resultado = 0
+    while pila.size() > 0:
+
+        resultado += pila.on_top().costo
+        cosa = pila.pop()
+        pila_aux.push(cosa)
+    return resultado
+
+
+carga()
+# a. Mostrar los planetas visitados en el orden hizo las misiones.
+misiones(pila)
+
+i = total(pila)
+print(i)
